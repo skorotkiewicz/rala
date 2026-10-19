@@ -32,12 +32,15 @@ permissions. Keep your config backed up alongside the data directory.
 
 ## Install on Arch Linux
 
-Install `base-devel`, then build and install the package from the repository root:
+Install the build tools and Git, then build and install the package from the
+repository root:
 
 ```sh
-sudo pacman -S --needed base-devel
+sudo pacman -S --needed base-devel cmake git
 cd packaging
 makepkg -si
+# or
+makepkg --nodeps --install
 ```
 
 The [PKGBUILD](packaging/PKGBUILD) builds the current checkout, including
