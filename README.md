@@ -30,6 +30,33 @@ configuration or adding accounts. Account creation rewrites TOML formatting and
 comments, preserves settings, and replaces the file atomically with private file
 permissions. Keep your config backed up alongside the data directory.
 
+## Install on Arch Linux
+
+Install `base-devel`, then build and install the package from the repository root:
+
+```sh
+sudo pacman -S --needed base-devel
+cd packaging
+makepkg -si
+```
+
+The [PKGBUILD](packaging/PKGBUILD) builds the current checkout, including
+uncommitted source changes. It uses a release build and disables debug packages.
+Installation creates the `rala` service user and installs the binary at
+`/usr/bin/rala`, configuration at `/etc/rala/config.toml`, and the systemd service.
+Data lives in `/var/lib/rala`. Package upgrades preserve configuration changes.
+
+Edit `/etc/rala/config.toml` to set `domain` and `clone_prefix`, then create an
+account and start the service:
+
+```sh
+sudo -u rala /usr/bin/rala create user alice --config /etc/rala/config.toml
+sudo systemctl enable --now rala.service
+```
+
+Restart with `sudo systemctl restart rala.service` after later configuration or
+account changes.
+
 ## Publish a site
 
 Run these commands inside your website repository:
