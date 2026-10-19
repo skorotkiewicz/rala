@@ -1,0 +1,3 @@
+d /etc/rala 0750 rala rala -
+z /etc/rala/config.toml 0600 rala rala -
+d /var/lib/rala 0700 rala rala -

@@ -1,0 +1,21 @@
+title = "my server"
+domain = "localhost"
+tls = true
+# Omit both paths to generate a persistent self-signed certificate for domain.
+# tls_certificate = "tls/fullchain.pem"
+# tls_private_key = "tls/privkey.pem"
+description = "my hosting"
+markdown_description = """my server description here. \
+test \
+**Markdown** is supported."""
+git_bind = "0.0.0.0:2222"
+web_bind = "0.0.0.0:8080"
+data_dir = "data"
+clone_prefix = "https://localhost:8080 ssh://git@localhost:2222"
+# Paths are relative to this configuration file.
+# style = "theme.css"
+# logo = "logo.svg"
+# favicon = "favicon.svg"
+
+# Add real accounts with `rala create user`; it writes SSH keys or Argon2id hashes.
+accounts = []

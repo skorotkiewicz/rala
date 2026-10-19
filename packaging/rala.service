@@ -1,0 +1,26 @@
+[Unit]
+Description=rala static website hosting
+After=network.target
+
+[Service]
+Type=exec
+User=rala
+Group=rala
+WorkingDirectory=/var/lib/rala
+ExecStart=/usr/local/bin/rala serve --config /etc/rala/config.toml
+Environment=RUST_LOG=rala=info
+Restart=on-failure
+RestartSec=5s
+KillSignal=SIGINT
+TimeoutStopSec=30s
+
+StateDirectory=rala
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

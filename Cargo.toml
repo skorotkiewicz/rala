@@ -1,0 +1,28 @@
+[package]
+name = "rala"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1"
+ammonia = "4"
+argon2 = "0.5"
+axum = "0.8"
+axum-server = { version = "0.8", features = ["tls-rustls-no-provider"] }
+clap = { version = "4", features = ["derive"] }
+percent-encoding = "2"
+pulldown-cmark = "0.13"
+rand = "0.10"
+rcgen = "0.13"
+rpassword = "7"
+russh = "0.64.1"
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+serde = { version = "1", features = ["derive"] }
+tar = "0.4"
+tempfile = "3"
+tokio = { version = "1", features = ["full"] }
+toml = "0.9"
+tower = { version = "0.5", features = ["util"] }
+tower-http = { version = "0.6", features = ["fs", "trace"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
