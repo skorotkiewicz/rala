@@ -98,6 +98,56 @@ All repositories and websites are public. Uploaded HTML and scripts share the
 server's origin, so use accounts for publishers you trust. There are no storage
 quotas or build jobs. Git pushes run as the rala process user.
 
+## Run with systemd
+
+Install Git using your distribution's package manager, then install the binary,
+configuration, and [service unit](packaging/rala.service):
+
+```sh
+cargo build --release
+sudo useradd --system --user-group --home-dir /var/lib/rala \
+  --no-create-home --shell /usr/sbin/nologin rala
+sudo install -m 0755 target/release/rala /usr/local/bin/rala
+sudo install -d -o rala -g rala -m 0750 /etc/rala
+sudo install -o rala -g rala -m 0600 config.example.toml /etc/rala/config.toml
+sudo install -m 0644 packaging/rala.service /etc/systemd/system/rala.service
+```
+
+Edit `/etc/rala/config.toml` and set the data directory to:
+
+```toml
+data_dir = "/var/lib/rala"
+```
+
+Set `domain` and `clone_prefix` to your server's public hostname and URLs. The
+default ports are 2222 for SSH and 8080 for HTTPS. Put custom assets and supplied
+TLS files under `/etc/rala/` and make them readable by `rala`. The service cannot
+access home directories and can write only to `/var/lib/rala` and its private
+temporary directories. systemd creates `/var/lib/rala` with private permissions.
+
+Create accounts as the service user, then enable the service at boot and start it:
+
+```sh
+sudo -u rala /usr/local/bin/rala create user alice --config /etc/rala/config.toml
+sudo systemctl daemon-reload
+sudo systemctl enable --now rala.service
+sudo systemctl status rala.service
+```
+
+For an SSH key account, use a public key file readable by `rala` with
+`create user bob --ssh-key /path/to/bob.pub`. Run account creation as `rala` so
+the rewritten configuration remains readable by the service. Restart after
+configuration or account changes:
+
+```sh
+sudo systemctl restart rala.service
+sudo journalctl -u rala.service -f
+```
+
+The unit restarts rala after failures and sends SIGINT on stop to use its existing
+shutdown handler. Back up `/etc/rala/` and `/var/lib/rala/` to preserve accounts,
+repositories, deployed sites, and server keys.
+
 ## Development
 
 ```sh
