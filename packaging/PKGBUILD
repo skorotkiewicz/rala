@@ -5,6 +5,7 @@ pkgdesc='Publish static websites with Git over SSH'
 arch=('x86_64' 'aarch64')
 depends=('gcc-libs' 'glibc' 'git' 'systemd')
 makedepends=('rust' 'cmake')
+install=rala.install
 backup=('etc/rala/config.toml')
 options=('!lto' '!debug')
 
