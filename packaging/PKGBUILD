@@ -36,7 +36,7 @@ package() {
     cd "$srcdir/$pkgname-$pkgver"
     install -Dm755 "$srcdir/target/release/rala" "$pkgdir/usr/bin/rala"
 
-    install -dm750 "$pkgdir/etc/rala"
+    install -dm770 "$pkgdir/etc/rala"
     install -m600 config.example.toml "$pkgdir/etc/rala/config.toml"
     sed -i 's|^data_dir = .*|data_dir = "/var/lib/rala"|' "$pkgdir/etc/rala/config.toml"
 
